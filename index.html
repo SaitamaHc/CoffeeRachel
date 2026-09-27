@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#4b2e22" />
+  <title>Coffee with Rachel ☕</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      color: #fff8ef;
+      background:
+        radial-gradient(circle at 25% 20%, rgba(255, 214, 170, .22), transparent 35%),
+        radial-gradient(circle at 75% 75%, rgba(124, 75, 50, .36), transparent 40%),
+        linear-gradient(145deg, #241611, #5b3827 52%, #2c1b15);
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      background:
+        radial-gradient(circle, rgba(255,255,255,.06) 0 1px, transparent 1.5px);
+      background-size: 26px 26px;
+      animation: drift 18s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0,0,0) rotate(0deg); }
+      to   { transform: translate3d(70px,45px,0) rotate(2deg); }
+    }
+
+    .scene {
+      width: min(1100px, 94vw);
+      min-height: min(760px, 92vh);
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 34px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .copy {
+      padding: 24px 8px;
+      animation: fadeUp .9s ease both;
+    }
+
+    .eyebrow {
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-size: .82rem;
+      color: #f2c99f;
+      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(2.7rem, 7vw, 6.2rem);
+      line-height: .94;
+      margin: 0 0 18px;
+      font-weight: 800;
+      letter-spacing: -.045em;
+    }
+
+    .rachel {
+      display: inline-block;
+      color: #ffd7ad;
+      text-shadow: 0 8px 32px rgba(255, 190, 130, .18);
+      animation: wobble 2.2s ease-in-out infinite;
+      transform-origin: 50% 80%;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-1.5deg) translateY(0); }
+      25%      { transform: rotate(1.3deg) translateY(-2px); }
+      50%      { transform: rotate(-.7deg) translateY(1px); }
+      75%      { transform: rotate(1deg) translateY(-1px); }
+    }
+
+    .question {
+      max-width: 560px;
+      font-size: clamp(1.08rem, 2.3vw, 1.35rem);
+      line-height: 1.65;
+      color: #f7e9da;
+      margin: 0 0 28px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      min-height: 58px;
+      position: relative;
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 15px 26px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      touch-action: manipulation;
+    }
+
+    #yesBtn {
+      background: #fff0df;
+      color: #3a2219;
+      box-shadow: 0 12px 30px rgba(0,0,0,.24);
+    }
+
+    #yesBtn:hover { transform: translateY(-3px) scale(1.03); }
+
+    #noBtn {
+      background: rgba(255,255,255,.11);
+      color: #fff6ed;
+      border: 1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(8px);
+    }
+
+    .art {
+      position: relative;
+      min-height: 570px;
+      display: grid;
+      place-items: center;
+      animation: fadeIn 1.1s .15s ease both;
+    }
+
+    .glow {
+      position: absolute;
+      width: 430px;
+      height: 430px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 211, 165, .24), transparent 67%);
+      filter: blur(7px);
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(.96); opacity: .8; }
+      50%     { transform: scale(1.05); opacity: 1; }
+    }
+
+    .table {
+      position: absolute;
+      bottom: 78px;
+      width: min(440px, 88%);
+      height: 115px;
+      border-radius: 50%;
+      background: linear-gradient(#7f543e, #4f3024);
+      box-shadow: 0 28px 70px rgba(0,0,0,.35);
+      transform: perspective(600px) rotateX(62deg);
+    }
+
+    .cup-wrap {
+      width: 360px;
+      height: 390px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      animation: floatCup 4s ease-in-out infinite;
+    }
+
+    @keyframes floatCup {
+      0%,100% { transform: translateY(0) rotate(-.4deg); }
+      50%     { transform: translateY(-9px) rotate(.5deg); }
+    }
+
+    .steam {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 170px;
+      height: 170px;
+      transform: translateX(-50%);
+      filter: blur(.4px);
+    }
+
+    .steam span {
+      position: absolute;
+      bottom: 4px;
+      width: 22px;
+      height: 110px;
+      border-radius: 50%;
+      border-left: 5px solid rgba(255,255,255,.62);
+      opacity: 0;
+      animation: steam 3.2s ease-in-out infinite;
+    }
+
+    .steam span:nth-child(1) { left: 28px; animation-delay: 0s; }
+    .steam span:nth-child(2) { left: 72px; animation-delay: .8s; }
+    .steam span:nth-child(3) { left: 116px; animation-delay: 1.6s; }
+
+    @keyframes steam {
+      0%   { transform: translateY(30px) scale(.7) rotate(4deg); opacity: 0; }
+      25%  { opacity: .72; }
+      70%  { opacity: .32; }
+      100% { transform: translateY(-50px) scale(1.2) rotate(-7deg); opacity: 0; }
+    }
+
+    .mug {
+      position: relative;
+      margin-top: 96px;
+      width: 240px;
+      height: 190px;
+      border-radius: 25px 25px 70px 70px;
+      background: linear-gradient(145deg, #f7eadb, #d9c0a8);
+      box-shadow:
+        inset -18px -12px 25px rgba(91, 61, 46, .17),
+        0 32px 48px rgba(0,0,0,.28);
+    }
+
+    .mug::before {
+      content: "";
+      position: absolute;
+      width: 70px;
+      height: 105px;
+      right: -62px;
+      top: 38px;
+      border: 20px solid #dfcbb8;
+      border-left-width: 16px;
+      border-radius: 45%;
+      z-index: -1;
+    }
+
+    .coffee {
+      position: absolute;
+      width: 214px;
+      height: 58px;
+      left: 13px;
+      top: -17px;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at center, #9d6947 0 18%, #75472f 19% 43%, #4b2c20 44% 100%);
+      border: 8px solid #ead8c7;
+      box-shadow: inset 0 8px 12px rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .foam-heart {
+      position: absolute;
+      left: 50%;
+      top: 49%;
+      width: 37px;
+      height: 33px;
+      transform: translate(-50%,-50%) rotate(-45deg);
+      background: #e8c9a5;
+      border-radius: 0 50% 50% 50%;
+      opacity: .86;
+      animation: heartBeat 2s ease-in-out infinite;
+    }
+
+    .foam-heart::before,
+    .foam-heart::after {
+      content: "";
+      position: absolute;
+      width: 37px;
+      height: 33px;
+      background: #e8c9a5;
+      border-radius: 50%;
+    }
+
+    .foam-heart::before { left: 18px; top: 0; }
+    .foam-heart::after  { left: 0; top: -18px; }
+
+    @keyframes heartBeat {
+      0%,100% { transform: translate(-50%,-50%) rotate(-45deg) scale(.95); }
+      50%     { transform: translate(-50%,-50%) rotate(-45deg) scale(1.07); }
+    }
+
+    .mug-name {
+      position: absolute;
+      width: 100%;
+      top: 76px;
+      left: 0;
+      text-align: center;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 2.15rem;
+      font-weight: 700;
+      font-style: italic;
+      color: #704633;
+      text-shadow: 0 2px 0 rgba(255,255,255,.4);
+      animation: mugWobble 2.6s ease-in-out infinite;
+    }
+
+    @keyframes mugWobble {
+      0%,100% { transform: rotate(-1deg) scale(1); }
+      50%     { transform: rotate(1deg) scale(1.03); }
+    }
+
+    .small-note {
+      margin-top: 18px;
+      font-size: .86rem;
+      color: rgba(255,245,235,.65);
+    }
+
+    .success {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: center;
+      padding: 24px;
+      background: rgba(32, 18, 13, .82);
+      backdrop-filter: blur(12px);
+    }
+
+    .success.show { display: grid; }
+
+    .success-card {
+      width: min(520px, 92vw);
+      text-align: center;
+      padding: 42px 28px;
+      border-radius: 30px;
+      background: rgba(255, 244, 231, .96);
+      color: #3d241a;
+      box-shadow: 0 30px 90px rgba(0,0,0,.42);
+      animation: pop .45s ease both;
+    }
+
+    .success-card h2 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+    }
+
+    .success-card p {
+      margin: 0 0 24px;
+      line-height: 1.6;
+      color: #614236;
+    }
+
+    .success-card a {
+      display: inline-block;
+      text-decoration: none;
+      background: #4d3024;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+    }
+
+    .confetti {
+      position: fixed;
+      top: -20px;
+      width: 10px;
+      height: 16px;
+      border-radius: 3px;
+      z-index: 30;
+      pointer-events: none;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(115vh) rotate(720deg); opacity: .9; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(.97); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 820px) {
+      body { align-items: start; }
+
+      .scene {
+        width: 100%;
+        min-height: 100vh;
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding: 22px 18px 36px;
+      }
+
+      .copy {
+        order: 2;
+        text-align: center;
+        padding: 0 4px;
+        margin-top: -4px;
+      }
+
+      .question { margin-left: auto; margin-right: auto; }
+
+      .buttons {
+        justify-content: center;
+        padding-bottom: 10px;
+      }
+
+      .art {
+        order: 1;
+        min-height: 390px;
+      }
+
+      .cup-wrap {
+        transform: scale(.84);
+        margin-top: -8px;
+      }
+
+      .glow {
+        width: 330px;
+        height: 330px;
+      }
+
+      .table {
+        bottom: 35px;
+        width: 330px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 15vw, 5rem);
+      }
+    }
+
+    @media (max-width: 420px) {
+      .art { min-height: 355px; }
+      .cup-wrap { transform: scale(.74); }
+      .copy { margin-top: -18px; }
+      button { width: min(270px, 90vw); }
+      .buttons { flex-direction: column; align-items: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="scene">
+    <section class="copy">
+      <div class="eyebrow">A tiny coffee invitation</div>
+      <h1>Hey <span class="rachel">Rachel</span> ☕</h1>
+      <p class="question">
+        I was thinking… good coffee is even better with good company.
+        Would you like to go for a coffee with me?
+      </p>
+
+      <div class="buttons" id="buttonArea">
+        <button id="yesBtn">Yes, coffee! ☕</button>
+        <button id="noBtn">Hmm… no 😄</button>
+      </div>
+
+      <div class="small-note">No pressure. Just coffee, conversation, and hopefully a nice time.</div>
+    </section>
+
+    <section class="art" aria-label="Animated coffee cup">
+      <div class="glow"></div>
+      <div class="table"></div>
+
+      <div class="cup-wrap">
+        <div class="steam" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="mug">
+          <div class="coffee">
+            <div class="foam-heart"></div>
+          </div>
+          <div class="mug-name">Rachel</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="success" id="success">
+    <div class="success-card">
+      <h2>Perfect ☕✨</h2>
+      <p>
+        Excellent choice, Rachel. Tap below and it’ll open WhatsApp so you can tell me when you're free.
+      </p>
+      <a id="whatsappLink"
+         href="https://wa.me/447469651598?text=Hey%20Amit%20%E2%98%95%EF%B8%8F%20Yes%2C%20I%27d%20love%20to%20go%20for%20coffee%20with%20you%20%F0%9F%98%8A">
+         Open WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const buttonArea = document.getElementById('buttonArea');
+    const success = document.getElementById('success');
+
+    function moveNoButton() {
+      const area = buttonArea.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+
+      const maxX = Math.max(0, area.width - btn.width);
+      const maxY = 90;
+
+      const x = Math.random() * maxX;
+      const y = (Math.random() * maxY) - 18;
+
+      noBtn.style.position = 'absolute';
+      noBtn.style.left = x + 'px';
+      noBtn.style.top = y + 'px';
+    }
+
+    ['mouseenter', 'touchstart', 'click'].forEach(evt => {
+      noBtn.addEventListener(evt, (e) => {
+        if (evt !== 'mouseenter') e.preventDefault();
+        moveNoButton();
+      }, { passive: false });
+    });
+
+    function confettiBurst() {
+      const pieces = 70;
+      const colors = ['#fff0df', '#f0c49c', '#d89666', '#ffffff', '#7f543e'];
+
+      for (let i = 0; i < pieces; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti';
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (2.2 + Math.random() * 2.2) + 's';
+        piece.style.animationDelay = (Math.random() * .35) + 's';
+        piece.style.transform = `rotate(${Math.random() * 360}deg)`;
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 5000);
+      }
+    }
+
+    yesBtn.addEventListener('click', () => {
+      confettiBurst();
+      success.classList.add('show');
+    });
+
+    success.addEventListener('click', (e) => {
+      if (e.target === success) success.classList.remove('show');
+    });
+  </script>
+</body>
+</html>
